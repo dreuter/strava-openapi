@@ -1,0 +1,81 @@
+--- swagger.json	2024-10-20 22:02:40.092133690 +0200
++++ swagger-patched.json	2024-10-20 22:02:39.180104150 +0200
+@@ -171,11 +171,10 @@
+         "parameters": [
+           {
+             "name": "weight",
+-            "in": "path",
++            "in": "body",
+             "description": "The weight of the athlete in kilograms.",
+             "required": true,
+-            "type": "number",
+-            "format": "float"
++            "schema": { "type": "number", "format": "float" }
+           }
+         ],
+         "responses": {
+@@ -2269,6 +2268,14 @@
+         "description": "Returns a list of the routes created by the authenticated athlete. Private routes are filtered out unless requested by a token with read_all scope.",
+         "parameters": [
+           {
++            "name": "id",
++            "in": "path",
++            "description": "The identifier of the athlete. Must match the authenticated athlete.",
++            "required": true,
++            "type": "integer",
++            "format": "int64"
++          },
++          {
+             "$ref": "#/parameters/page"
+           },
+           {
+@@ -2302,6 +2309,7 @@
+         "operationId": "getRouteAsGPX",
+         "summary": "Export Route GPX",
+         "description": "Returns a GPX file of the route. Requires read_all scope for private routes.",
++        "produces": [ "application/gpx+xml", "application/json" ],
+         "parameters": [
+           {
+             "name": "id",
+@@ -2318,13 +2326,9 @@
+         "responses": {
+           "200": {
+             "description": "A GPX file with the route.",
+-            "content": {
+-              "application/gpx+xml" : {
+-                "schema": {
+-                   "type" : "string",
+-                   "format": "binary"
+-                }
+-              }
++            "schema": {
++               "type" : "string",
++               "format": "binary"
+             }
+           },
+           "default": {
+@@ -2341,6 +2345,7 @@
+         "operationId": "getRouteAsTCX",
+         "summary": "Export Route TCX",
+         "description": "Returns a TCX file of the route. Requires read_all scope for private routes.",
++        "produces": [ "application/gpx+xml", "application/json" ],
+         "parameters": [
+           {
+             "name": "id",
+@@ -2357,13 +2362,9 @@
+         "responses": {
+           "200": {
+             "description": "A TCX file with the route.",
+-            "content": {
+-              "application/tcx+xml" : {
+-                "schema": {
+-                   "type" : "string",
+-                   "format": "binary"
+-                }
+-              }
++            "schema": {
++               "type" : "string",
++               "format": "binary"
+             }
+           },
+           "default": {

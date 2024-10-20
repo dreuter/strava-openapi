@@ -1,9 +1,14 @@
 {
   "private": true,
   "scripts": {
-    "generate": "openapi-generator-cli generate -i https://developers.strava.com/swagger/swagger.json -g rust --skip-validate-spec --package-name=strava-openapi"
+    "generate-patch": "cp swagger.json swagger-patched.json; npm run get-definition; diff -Naur swagger.json swagger-patched.json > swagger.diff",
+    "get-definition": "download https://developers.strava.com/swagger/swagger.json > swagger.json",
+    "patch-definition": "patch < swagger.diff",
+    "generate": "openapi-generator-cli generate -i swagger.json -g rust --package-name=strava-openapi",
+    "all": "npm run get-definition && npm run patch-definition && npm run generate"
   },
   "devDependencies": {
-    "@openapitools/openapi-generator-cli": "^2.14.0"
+    "@openapitools/openapi-generator-cli": "^2.14.0",
+    "download-cli": "^1.1.1"
   }
 }
