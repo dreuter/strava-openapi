@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "scripts": {
+    "generate": "openapi-generator-cli generate -i https://developers.strava.com/swagger/swagger.json -g rust --skip-validate-spec --package-name=strava-openapi"
+  },
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.14.0"
+  }
+}
